@@ -1,14 +1,19 @@
-const express = require("express");
-const cors = require("cors");
+require('dotenv').config();
 
-const { routeNotFound, errorHandler } = require("./middlewares");
+const express = require('express');
+const cors = require('cors');
+
+const { initDbConnection } = require('./db');
+const { routeNotFound, errorHandler } = require('./middlewares');
 
 const app = express();
 const port = 8080;
 
+initDbConnection();
+
 app.use(
   cors({
-    origin: "*"
+    origin: '*',
   })
 );
 
@@ -16,12 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(port, () => {
-  console.log("Server Started");
+  console.log('Server Started');
   console.log(`App listening at http://localhost:${port}`);
 });
 
-app.get("/", (req, res) => {
-  res.send("ॐ नमः शिवाय ॐ");
+app.get('/', (req, res) => {
+  res.send('ॐ नमः शिवाय ॐ');
 });
 
 app.use(routeNotFound);
